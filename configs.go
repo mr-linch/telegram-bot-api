@@ -447,9 +447,12 @@ func (config StickerConfig) method() string {
 // VideoConfig contains information about a SendVideo request.
 type VideoConfig struct {
 	BaseFile
-	Duration  int
-	Caption   string
-	ParseMode string
+	Duration          int
+	Caption           string
+	Width             int
+	Height            int
+	SupportsStreaming bool
+	ParseMode         string
 }
 
 // values returns a url.Values representation of VideoConfig.
@@ -470,6 +473,18 @@ func (config VideoConfig) values() (url.Values, error) {
 		}
 	}
 
+	if config.Width != 0 {
+		v.Add("width", strconv.Itoa(config.Width))
+	}
+
+	if config.Height != 0 {
+		v.Add("height", strconv.Itoa(config.Height))
+	}
+
+	if config.SupportsStreaming {
+		v.Add("supports_streaming", strconv.FormatBool(config.SupportsStreaming))
+	}
+
 	return v, nil
 }
 
@@ -482,6 +497,18 @@ func (config VideoConfig) params() (map[string]string, error) {
 		if config.ParseMode != "" {
 			params["parse_mode"] = config.ParseMode
 		}
+	}
+
+	if config.Width != 0 {
+		params["width"] = strconv.Itoa(config.Width)
+	}
+
+	if config.Height != 0 {
+		params["height"] = strconv.Itoa(config.Height)
+	}
+
+	if config.SupportsStreaming {
+		params["supports_streaming"] = strconv.FormatBool(config.SupportsStreaming)
 	}
 
 	return params, nil
