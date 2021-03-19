@@ -814,7 +814,7 @@ func (config GameConfig) method() string {
 
 // SetGameScoreConfig allows you to update the game score in a chat.
 type SetGameScoreConfig struct {
-	UserID             int
+	UserID             int64
 	Score              int
 	Force              bool
 	DisableEditMessage bool
@@ -827,7 +827,7 @@ type SetGameScoreConfig struct {
 func (config SetGameScoreConfig) values() (url.Values, error) {
 	v := url.Values{}
 
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 	v.Add("score", strconv.Itoa(config.Score))
 	if config.InlineMessageID == "" {
 		if config.ChannelUsername == "" {
@@ -850,7 +850,7 @@ func (config SetGameScoreConfig) method() string {
 
 // GetGameHighScoresConfig allows you to fetch the high scores for a game.
 type GetGameHighScoresConfig struct {
-	UserID          int
+	UserID          int64
 	ChatID          int
 	ChannelUsername string
 	MessageID       int
@@ -860,7 +860,7 @@ type GetGameHighScoresConfig struct {
 func (config GetGameHighScoresConfig) values() (url.Values, error) {
 	v := url.Values{}
 
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 	if config.InlineMessageID == "" {
 		if config.ChannelUsername == "" {
 			v.Add("chat_id", strconv.Itoa(config.ChatID))
@@ -964,7 +964,7 @@ func (config EditMessageReplyMarkupConfig) method() string {
 // UserProfilePhotosConfig contains information about a
 // GetUserProfilePhotos request.
 type UserProfilePhotosConfig struct {
-	UserID int
+	UserID int64
 	Offset int
 	Limit  int
 }
@@ -1030,7 +1030,7 @@ type ChatMemberConfig struct {
 	ChatID             int64
 	SuperGroupUsername string
 	ChannelUsername    string
-	UserID             int
+	UserID             int64
 }
 
 // KickChatMemberConfig contains extra fields to kick user
@@ -1073,7 +1073,7 @@ type ChatConfig struct {
 type ChatConfigWithUser struct {
 	ChatID             int64
 	SuperGroupUsername string
-	UserID             int
+	UserID             int64
 }
 
 // InvoiceConfig contains information for sendInvoice request.

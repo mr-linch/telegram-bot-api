@@ -366,7 +366,7 @@ func (bot *BotAPI) sendChattable(config Chattable) (Message, error) {
 // Offset and Limit are optional.
 func (bot *BotAPI) GetUserProfilePhotos(config UserProfilePhotosConfig) (UserProfilePhotos, error) {
 	v := url.Values{}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 	if config.Offset != 0 {
 		v.Add("offset", strconv.Itoa(config.Offset))
 	}
@@ -601,7 +601,7 @@ func (bot *BotAPI) KickChatMember(config KickChatMemberConfig) (APIResponse, err
 	} else {
 		v.Add("chat_id", config.SuperGroupUsername)
 	}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 
 	if config.UntilDate != 0 {
 		v.Add("until_date", strconv.FormatInt(config.UntilDate, 10))
@@ -708,7 +708,7 @@ func (bot *BotAPI) GetChatMember(config ChatConfigWithUser) (ChatMember, error) 
 	} else {
 		v.Add("chat_id", config.SuperGroupUsername)
 	}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 
 	resp, err := bot.MakeRequest("getChatMember", v)
 	if err != nil {
@@ -735,7 +735,7 @@ func (bot *BotAPI) UnbanChatMember(config ChatMemberConfig) (APIResponse, error)
 	} else {
 		v.Add("chat_id", strconv.FormatInt(config.ChatID, 10))
 	}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 
 	bot.debugLog("unbanChatMember", v, nil)
 
@@ -756,7 +756,7 @@ func (bot *BotAPI) RestrictChatMember(config RestrictChatMemberConfig) (APIRespo
 	} else {
 		v.Add("chat_id", strconv.FormatInt(config.ChatID, 10))
 	}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 
 	if config.CanSendMessages != nil {
 		v.Add("can_send_messages", strconv.FormatBool(*config.CanSendMessages))
@@ -790,7 +790,7 @@ func (bot *BotAPI) PromoteChatMember(config PromoteChatMemberConfig) (APIRespons
 	} else {
 		v.Add("chat_id", strconv.FormatInt(config.ChatID, 10))
 	}
-	v.Add("user_id", strconv.Itoa(config.UserID))
+	v.Add("user_id", strconv.FormatInt(config.UserID, 10))
 
 	if config.CanChangeInfo != nil {
 		v.Add("can_change_info", strconv.FormatBool(*config.CanChangeInfo))
